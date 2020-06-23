@@ -14,8 +14,7 @@ def AddDescriptions(input_excel="", output_excel="", sheet_name=""):
     nrows = len(wkbk[sheet_name].index)
 
     wkbk[sheet_name]['HMDB_Description'] = pd.Series([""]*nrows,
-                                                        index=wkbk[sheet_name].index)
-    
+                                                     index=wkbk[sheet_name].index)
     is_na_value = wkbk[sheet_name].isnull()
 
     for row_idx in range(0, nrows):
