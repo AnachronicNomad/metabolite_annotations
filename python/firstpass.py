@@ -15,6 +15,14 @@ def AddDescriptions(input_excel="", output_excel="", sheet_name=""):
 
     wkbk[sheet_name]['HMDB_Description'] = pd.Series([""]*nrows,
                                                      index=wkbk[sheet_name].index)
+    id_keys = ['foodb_id', 'chemspider_id', 'pubchem_compound_id',
+               'chebi_id', 'drugbank_id', 'phenol_explorer_compound_id',
+               'knapsack_id', 'kegg_id', 'bigg_id', 'wikipedia_id',
+               'metlin_id', 'biocyc_id', 'pdb_id']
+               
+    for external_id in id_keys:
+        wkbk[sheet_name][external_id] = pd.Series([""]*nrows,
+                                                  index=wkbk[sheet_name].index)
     is_na_value = wkbk[sheet_name].isnull()
 
     for row_idx in range(0, nrows):
@@ -30,6 +38,13 @@ def AddDescriptions(input_excel="", output_excel="", sheet_name=""):
 
                     desc_str = xml_data['metabolite']['description']
                     wkbk[sheet_name].loc[row_idx, 'HMDB_Description'] = desc_str 
+
+
+                    for external_id in id_keys:
+                        if xml_data['metabolite'][external_id] is not None:
+                            val = xml_data['metabolite'][external_id]
+                            wkbk[sheet_name].loc[row_idx, external_id] = val
+
             except:
                 print(hmdb_id, " FAILED")
                 continue
