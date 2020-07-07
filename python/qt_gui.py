@@ -27,6 +27,7 @@ class MyWidget(QWidget):
     def magic(self):
         self.text.setText(random.choice(self.hello))
 
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
